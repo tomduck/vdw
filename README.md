@@ -4,9 +4,11 @@ vdw
 
 Vdw is a python library for van der Waals fluid calculations.
 
-The library is fairly rudimentary.  Read the doc strings for usage
-details.
+The library is fairly rudimentary.  Install it using `pip3 install`.
+Read the docstrings for usage details.
 
-The example given in the `examples/` directory generates the following plot:
+Examples given in the `examples/` directory generate the following plots:
 
-![Heat capacity of liquid water.](https://rawgit.com/tomduck/vdw/master/images/isotherms.svg)
+![van der Waals isotherms.](https://rawgit.com/tomduck/vdw/master/images/pv-isotherms.svg)
+
+![van der Waals isobars.](https://rawgit.com/tomduck/vdw/master/images/Ts-isobars.svg)

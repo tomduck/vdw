@@ -1,15 +1,12 @@
 #! /usr/bin/env python3
 
-import ez_setup
-ez_setup.use_setuptools()
-
-from setuptools import setup, find_packages
+from setuptools import setup
 
 DESCRIPTION = """\
 van der Waals fluid functions.
 """
 
-VERSION = '0.1'
+VERSION = '0.2'
 
 setup(name='vdw',
     version=VERSION,
