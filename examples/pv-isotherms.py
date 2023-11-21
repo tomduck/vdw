@@ -20,8 +20,7 @@ path = parser.parse_args().path
 # Reduced variables
 vr = numpy.linspace(0.36,20,1000)
 Tr = numpy.array([0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4])
-pr = [vdw.pr(T, vr) if T>=1 else
-      vdw.maxwell(T, vr, vdw.pr(T, vr), line='isotherm') for T in Tr]
+pr = [vdw.maxwell(T, vr, vdw.pr(T, vr)) for T in Tr]
 
 # Mixed-phase boundary
 vrl, vrg, prsat = [], [], []

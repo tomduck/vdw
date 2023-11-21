@@ -17,8 +17,7 @@ path = parser.parse_args().path
 vr = numpy.linspace(0.36, 20, 1000)
 pr = numpy.array([0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.1, 1.2])
 s = [vdw.s(vdw.Tr(p, vr), vr) for p in pr]
-Tr = [vdw.Tr(p, vr) if p >= 1 else
-      vdw.maxwell(vdw.Tr(p, vr), vr, p, line='isobar') for p in pr]
+Tr = [vdw.maxwell(vdw.Tr(p, vr), vr, p) for p in pr]
 
 # Mixed-phase boundary
 sl, sg, Trsat = [], [], []
@@ -47,8 +46,8 @@ pyplot.plot(sg, Trsat, 'k--')
 pyplot.xlim(-2, 2)
 pyplot.ylim(0.8, 1.2)
 
-pyplot.xlabel('Nondimensional Entropy')
-pyplot.ylabel('Reduced Temperature')
+pyplot.xlabel('Nondimensional entropy')
+pyplot.ylabel('Reduced temperature')
 
 if path:
     pyplot.savefig(path, transparent=True)

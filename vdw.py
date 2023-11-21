@@ -85,27 +85,40 @@ def ds(*, Tr=None, pr=None):
     # Return the optimized entropy change
     return scipy.optimize.brentq(f, 1e-5, 700)
 
-def maxwell(Tr, vr, pr, *, line):
-    """Applies Maxwell construction to a van der Waals isoline.
+def maxwell(Tr, vr, pr):
+    """Applies Maxwell construction to a van der Waals isoline
+    (either an isotherm or isobar).
 
-    Tr - the reduced temperature of the isotherm
+    Tr - the reduced temperature value or array
     vr - the reduced volume array
-    pr - the reduced pressure array
-    line - either 'isotherm' or 'isobar'
+    pr - the reduced pressure value or array
+
+    The Maxwell construction will be applied to whichever one of Tr and pr
+    is an array.  The other must be a value.
+
+    Returns the array to which the Maxwell construction has been applied.
+    If the Maxwell construction can't be applied, then the array is passed
+    through.
     """
 
-    assert line in ['isotherm', 'isobar']
+    assert numpy.isscalar(Tr) != numpy.isscalar(pr)
+
+    # If the Maxwell construction doesn't apply, return the appropriate isoline
+    if numpy.isscalar(Tr) and Tr >= 1:
+        return pr
+    if numpy.isscalar(pr) and pr >= 1:
+        return Tr
 
     # Get the normalized entropy change
-    ds_ = ds(Tr=Tr) if line=='isotherm' else ds(pr=pr)
+    ds_ = ds(Tr=Tr) if numpy.isscalar(Tr) else ds(pr=pr)
 
     # Get indices for the bounding volumes
     i1, i2 = numpy.searchsorted(vr, vrsat(ds_))
 
     # Flatten the isoline
-    if line == 'isotherm':
+    if numpy.isscalar(Tr):
         pr[i1:i2] = prsat(ds_)
     else:
         Tr[i1:i2] = Trsat(ds_)
 
-    return pr if line == 'isotherm' else Tr
+    return pr if numpy.isscalar(Tr) else Tr
